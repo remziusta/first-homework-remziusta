@@ -4,20 +4,22 @@ import com.sms.dao.ICrud;
 import com.sms.model.Instructor;
 import com.sms.util.EntityManagerUtil;
 
-import javax.persistence.EntityManager;
 import java.util.List;
+
+import static com.sms.maintest.TestClass.entityManager;
 
 public class InstructorRepo implements ICrud<Instructor> {
 
-    EntityManager entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
 
     @Override
     public List<Instructor> getAllData() {
+        isOpenEntityManager();
         return entityManager.createQuery("from Instructor ", Instructor.class).getResultList();
     }
 
     @Override
     public Instructor findById(long id) {
+        isOpenEntityManager();
         return entityManager.find(Instructor.class,id);
     }
 
@@ -31,6 +33,7 @@ public class InstructorRepo implements ICrud<Instructor> {
             entityManager.getTransaction().rollback();
         }finally {
             EntityManagerUtil.closeEntityManager(entityManager);
+            entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
         }
     }
 
@@ -44,6 +47,7 @@ public class InstructorRepo implements ICrud<Instructor> {
         }finally {
             entityManager.getTransaction().commit();
             EntityManagerUtil.closeEntityManager(entityManager);
+            entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
         }
         return null;
     }
@@ -58,6 +62,12 @@ public class InstructorRepo implements ICrud<Instructor> {
             entityManager.getTransaction().rollback();
         }finally {
             EntityManagerUtil.closeEntityManager(entityManager);
+            entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
         }
+    }
+
+    public void isOpenEntityManager(){
+        if(!entityManager.isOpen())
+            entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
     }
 }

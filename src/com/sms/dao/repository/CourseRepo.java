@@ -3,21 +3,21 @@ package com.sms.dao.repository;
 import com.sms.dao.ICrud;
 import com.sms.model.Course;
 import com.sms.util.EntityManagerUtil;
-
-import javax.persistence.EntityManager;
 import java.util.List;
 
+import static com.sms.maintest.TestClass.entityManager;
+
 public class CourseRepo implements ICrud<Course> {
-    EntityManager entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
 
     @Override
     public List<Course> getAllData() {
+        isOpenEntityManager();
         return entityManager.createQuery("from Course", Course.class).getResultList();
     }
 
-
     @Override
     public Course findById(long id) {
+        isOpenEntityManager();
         return entityManager.find(Course.class,id);
     }
 
@@ -59,5 +59,10 @@ public class CourseRepo implements ICrud<Course> {
         }finally {
             EntityManagerUtil.closeEntityManager(entityManager);
         }
+    }
+
+    public void isOpenEntityManager(){
+        if(!entityManager.isOpen())
+            entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
     }
 }

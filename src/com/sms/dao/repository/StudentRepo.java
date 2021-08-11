@@ -3,21 +3,22 @@ package com.sms.dao.repository;
 import com.sms.dao.ICrud;
 import com.sms.model.Student;
 import com.sms.util.EntityManagerUtil;
-
-import javax.persistence.EntityManager;
 import java.util.List;
+
+import static com.sms.maintest.TestClass.entityManager;
 
 public class StudentRepo implements ICrud<Student> {
 
-    EntityManager entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
 
     @Override
     public List<Student> getAllData() {
+        isOpenEntityManager();
         return entityManager.createQuery("from Student ", Student.class).getResultList();
     }
 
     @Override
     public Student findById(long id) {
+        isOpenEntityManager();
         return entityManager.find(Student.class,id);
     }
 
@@ -31,6 +32,7 @@ public class StudentRepo implements ICrud<Student> {
             entityManager.getTransaction().rollback();
         }finally {
             EntityManagerUtil.closeEntityManager(entityManager);
+            entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
         }
     }
 
@@ -44,6 +46,7 @@ public class StudentRepo implements ICrud<Student> {
         }finally {
             entityManager.getTransaction().commit();
             EntityManagerUtil.closeEntityManager(entityManager);
+            entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
         }
         return null;
     }
@@ -58,6 +61,12 @@ public class StudentRepo implements ICrud<Student> {
             entityManager.getTransaction().rollback();
         }finally {
             EntityManagerUtil.closeEntityManager(entityManager);
+            entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
         }
+    }
+
+    public void isOpenEntityManager(){
+        if(!entityManager.isOpen())
+            entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
     }
 }

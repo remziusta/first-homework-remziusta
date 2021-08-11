@@ -11,11 +11,11 @@ import java.util.List;
 
 public class Services implements IService{
 
-    InstructorRepo instructorRepo;
+    InstructorRepo instructorRepo = new InstructorRepo();
 
-    StudentRepo studentRepo;
+    StudentRepo studentRepo = new StudentRepo();
 
-    CourseRepo courseRepo;
+    CourseRepo courseRepo = new CourseRepo();
 
     @Override
     public List<Student> getAllStudent() {
