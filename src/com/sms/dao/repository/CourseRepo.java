@@ -11,13 +11,13 @@ public class CourseRepo implements ICrud<Course> {
 
     @Override
     public List<Course> getAllData() {
-        isOpenEntityManager();
+        isOpenEntityMenager();
         return entityManager.createQuery("from Course", Course.class).getResultList();
     }
 
     @Override
     public Course findById(long id) {
-        isOpenEntityManager();
+        isOpenEntityMenager();
         return entityManager.find(Course.class,id);
     }
 
@@ -61,8 +61,8 @@ public class CourseRepo implements ICrud<Course> {
         }
     }
 
-    public void isOpenEntityManager(){
-        if(!entityManager.isOpen())
+    public void isOpenEntityMenager(){
+        if(entityManager != null)
             entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
     }
 }

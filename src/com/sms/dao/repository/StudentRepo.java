@@ -12,13 +12,13 @@ public class StudentRepo implements ICrud<Student> {
 
     @Override
     public List<Student> getAllData() {
-        isOpenEntityManager();
+        isOpenEntityMenager();
         return entityManager.createQuery("from Student ", Student.class).getResultList();
     }
 
     @Override
     public Student findById(long id) {
-        isOpenEntityManager();
+        isOpenEntityMenager();
         return entityManager.find(Student.class,id);
     }
 
@@ -32,7 +32,6 @@ public class StudentRepo implements ICrud<Student> {
             entityManager.getTransaction().rollback();
         }finally {
             EntityManagerUtil.closeEntityManager(entityManager);
-            entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
         }
     }
 
@@ -46,7 +45,6 @@ public class StudentRepo implements ICrud<Student> {
         }finally {
             entityManager.getTransaction().commit();
             EntityManagerUtil.closeEntityManager(entityManager);
-            entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
         }
         return null;
     }
@@ -61,12 +59,11 @@ public class StudentRepo implements ICrud<Student> {
             entityManager.getTransaction().rollback();
         }finally {
             EntityManagerUtil.closeEntityManager(entityManager);
-            entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
         }
     }
 
-    public void isOpenEntityManager(){
-        if(!entityManager.isOpen())
+    public void isOpenEntityMenager(){
+        if(entityManager != null)
             entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
     }
 }

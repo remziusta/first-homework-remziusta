@@ -1,7 +1,7 @@
 package com.sms.service;
 
-import com.sms.dao.repository.CourseRepo;
 import com.sms.dao.repository.InstructorRepo;
+import com.sms.dao.repository.CourseRepo;
 import com.sms.dao.repository.StudentRepo;
 import com.sms.model.Course;
 import com.sms.model.Instructor;

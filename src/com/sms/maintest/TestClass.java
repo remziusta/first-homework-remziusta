@@ -15,14 +15,15 @@ public class TestClass {
     public static void main(String[] args) {
         saveTestData();
 
-
         Services services = new Services();
         Student s1 = new Student("Kemalcan", LocalDate.of(1998,Month.JANUARY,21),"URFA",'E');
 
         Instructor i2 = new VisitorInstructor("Çağlar Oflazoğlu","HATAY",7600.0);
         services.createInstructor(i2);
-        services.createStudent(s1);
+
+
         List<Student> s = services.getAllStudent();
+
         System.out.println(s.size());
     }
 
