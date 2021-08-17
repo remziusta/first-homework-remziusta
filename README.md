@@ -1,6 +1,5 @@
 # GittiGidiyor-first-homework
 
-<<<<<<< HEAD
 # Soru-1
 ![image](https://github.com/113-GittiGidiyor-Java-Spring-Bootcamp/first-homework-remziusta/blob/master/ClassDiagram.png)
 
